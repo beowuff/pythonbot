@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import json
 import socket
 from urllib.request import Request, urlopen
 
@@ -15,12 +16,13 @@ class Bot:
         self.testchannel = testchannel
         self.readbuffer = ""
 
+    @property
     def connect_to_server(self):
-        s = socket.socket()
-        s.connect((self.host, self.port))
+        connection = socket.socket()
+        connection.connect((self.host, int(self.port)))
         print("Connecting to freenode.")
 
-        return s
+        return connection
 
     def set_nick(self):
         s.send(("NICK %s\r\n" % self.nick).encode('utf-8'))
@@ -74,8 +76,13 @@ class Bot:
 
 run_loop = 1
 
-irc_bot = Bot("weber.freenode.net", 6667, "test_bot", "test_bot", "test_bot", "bottestbottest")
-s = irc_bot.connect_to_server()
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+print(config['host'])
+
+irc_bot = Bot(config['host'], config['port'], config['nick'], config['ident'], config['realname'], config["testchannel"])
+s = irc_bot.connect_to_server
 irc_bot.set_nick()
 irc_bot.join_channel()
 

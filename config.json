@@ -1,0 +1,8 @@
+{
+  "host": "irc.freenode.net",
+  "port": "6667",
+  "nick": "alpha_bot",
+  "ident": "alpha_bot",
+  "realname": "alpha_bot",
+  "testchannel": "bottestbottest"
+}
